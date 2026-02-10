@@ -5,19 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Model\Category;
+use App\Model\MasterItem;
 
-class MasterItem extends Model
+class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    
+    protected $table = 'category';
 
-    public function categories()
+    public function products()
     {
-        return $this->belongsToMany(
-            Category::class, 'product_categories',
+        return $this->belongsToMany(MasterItem::class,
             'master_item_category',
-            'master_items_id',
-            'category_id');
+            'category_id',
+            'master_items_id'
+            );
     }
 }

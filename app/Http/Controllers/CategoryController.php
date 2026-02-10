@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterItem;
+use App\Models\CategoryItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class MasterItemsController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
-        return view('master_items.index.index');
+        return view('master_category.index.index');
     }
 
     public function search(Request $request)
@@ -20,7 +21,7 @@ class MasterItemsController extends Controller
         $hargamin = $request->hargamin;
         $hargamax = $request->hargamax;
 
-        $data_search = MasterItem::query();
+        $data_search = Category::query();
 
         if (!empty($kode)) $data_search = $data_search->where('kode', $kode);
         if (!empty($nama)) $data_search = $data_search->where('nama', 'LIKE', '%' . $nama . '%');
@@ -41,17 +42,17 @@ class MasterItemsController extends Controller
         if ($method == 'new') {
             $item = [];
         } else {
-            $item = MasterItem::find($id);
+            $item = Category::find($id);
         }
         $data['item'] = $item;
         $data['method'] = $method;
-        return view('master_items.form.index', $data);
+        return view('master_category.form.index', $data);
     }
 
     public function singleView($kode)
     {
-        $data['data'] = MasterItem::where('kode', $kode)->first();
-        return view('master_items.single.index', $data);
+        $data['data'] = Category::where('kode', $kode)->first();
+        return view('master_category.single.index', $data);
     }
 
     public function formSubmit(Request $request, $method, $id = 0)
@@ -60,13 +61,13 @@ class MasterItemsController extends Controller
             $path = $request->file('preview_item')->store('products', 'public');
             $url = Storage::url($path);
             $data_item = new MasterItem;
-            $kode = MasterItem::count('id');
+            $kode = Category::count('id');
             $kode = $kode + 1;
             $kode = str_pad($kode, 5, '0', STR_PAD_LEFT);
             $data_item->img_url = $url;
             sleep(3);
         } else {
-            $data_item = MasterItem::find($id);
+            $data_item = Category::find($id);
             $kode = $data_item->kode;
             if (!empty($request->preview_item)) {
                 $path = str_replace('/storage', '',$data_item->img_url);
@@ -92,13 +93,13 @@ class MasterItemsController extends Controller
 
     public function delete($id)
     {
-        MasterItem::find($id)->delete();
+        Category::find($id)->delete();
         return redirect('master-items');
     }
 
     public function updateRandomData()
     {
-        $data = MasterItem::get();
+        $data = Category::get();
         foreach($data as $item)
         {
             $kode = $item->id;

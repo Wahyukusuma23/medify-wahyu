@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     @csrf
     @if($method == 'edit')
     <div class="form-group">
@@ -47,7 +47,19 @@
             <optio @if($selected == 'ATK') selected @endif>ATK</option>
         </select>
     </div>
-
+    <div class="form-group">
+        <label for="product_image">Foto Item</label>
+        <input type="file" name="preview_item" id="preview_item" class="form-control"
+            accept="image/*"
+            onchange="previewImage(event)">
+        <img
+            id="imagePreview"
+            src="{{ $item->img_url ?? ''}}"
+            alt="Preview"
+            class="h-100 form-control mt-4"
+            style="width:200px"
+        >
+    </div>
     <button class="btn btn-primary mt-3">Submit</button>
 
 </form>

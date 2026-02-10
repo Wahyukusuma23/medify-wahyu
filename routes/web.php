@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/master-items', [App\Http\Controllers\MasterItemsController::class, 'index']);
+Route::get('/master-items', [App\Http\Controllers\MasterItemsController::class, 'index'])->name('master-item.index');
 Route::get('/master-items/search', [App\Http\Controllers\MasterItemsController::class, 'search']);
 Route::get('/master-items/form/{method}/{id?}', [App\Http\Controllers\MasterItemsController::class, 'formView']);
 Route::post('/master-items/form/{method}/{id?}', [App\Http\Controllers\MasterItemsController::class, 'formSubmit']);
@@ -31,3 +31,12 @@ Route::get('/master-items/delete/{id}', [App\Http\Controllers\MasterItemsControl
 
 
 Route::get('/master-items/update-random-data', [App\Http\Controllers\MasterItemsController::class, 'updateRandomData']);
+
+// Category route
+Route::get('/category-items', [App\Http\Controllers\CategoryController::class, 'index'])->name('category-item.index');
+Route::get('/category-items/search', [App\Http\Controllers\CategoryController::class, 'search']);
+Route::get('/category-items/form/{method}/{id?}', [App\Http\Controllers\CategoryController::class, 'formView']);
+Route::post('/category-items/form/{method}/{id?}', [App\Http\Controllers\CategoryController::class, 'formSubmit']);
+
+Route::get('/category-items/view/{kode}', [App\Http\Controllers\CategoryController::class, 'singleView']);
+Route::get('/category-items/delete/{id}', [App\Http\Controllers\CategoryController::class, 'delete']);
