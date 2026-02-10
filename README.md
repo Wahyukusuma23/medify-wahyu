@@ -1,6 +1,6 @@
 
-## Catatan
-Berikut struktur tabel yang perlu ditambahkan:
+# Catatan
+Berikut struktur tabel yang perlu ditambahkan, khusus untuk master_items, setelah migrate harap hapus tabel sebelum execute SQL di bawah
 ### Copy baris dibawah
 
 
