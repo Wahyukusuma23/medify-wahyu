@@ -14,12 +14,12 @@ class Category extends Model
     
     protected $table = 'category';
 
-    public function products()
+    public function items()
     {
         return $this->belongsToMany(MasterItem::class,
-            'master_item_category',
+            'category_master_items',
             'category_id',
             'master_items_id'
-            );
+            )->withTimestamps();
     }
 }

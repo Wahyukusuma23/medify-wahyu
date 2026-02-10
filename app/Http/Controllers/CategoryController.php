@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterItem;
-use App\Models\CategoryItem;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,17 +18,13 @@ class CategoryController extends Controller
     {
         $kode = $request->kode;
         $nama = $request->nama;
-        $hargamin = $request->hargamin;
-        $hargamax = $request->hargamax;
 
         $data_search = Category::query();
 
         if (!empty($kode)) $data_search = $data_search->where('kode', $kode);
-        if (!empty($nama)) $data_search = $data_search->where('nama', 'LIKE', '%' . $nama . '%');
-        if (!empty($hargamin)) $data_search = $data_search->where('harga_beli', '>=', $hargamin);
-        if (!empty($hargamax)) $data_search = $data_search->where('harga_beli', '<=', $hargamax);
+        if (!empty($nama)) $data_search = $data_search->where('name', 'LIKE', '%' . $nama . '%');
 
-        $data_search = $data_search->select('kode', 'nama', 'jenis', 'harga_beli', 'laba', 'supplier')->orderBy('id')->get();
+        $data_search = $data_search->select('kode', 'name')->orderBy('id')->get();
 
 
         return json_encode([
@@ -51,50 +47,33 @@ class CategoryController extends Controller
 
     public function singleView($kode)
     {
-        $data['data'] = Category::where('kode', $kode)->first();
+        $data['data'] = Category::with('items')->where('kode', $kode)->first();
         return view('master_category.single.index', $data);
     }
 
     public function formSubmit(Request $request, $method, $id = 0)
     {
         if ($method == 'new') {
-            $path = $request->file('preview_item')->store('products', 'public');
-            $url = Storage::url($path);
-            $data_item = new MasterItem;
+            $data_item = new Category;
             $kode = Category::count('id');
             $kode = $kode + 1;
             $kode = str_pad($kode, 5, '0', STR_PAD_LEFT);
-            $data_item->img_url = $url;
+            $data_item->kode = $kode;
             sleep(3);
         } else {
             $data_item = Category::find($id);
-            $kode = $data_item->kode;
-            if (!empty($request->preview_item)) {
-                $path = str_replace('/storage', '',$data_item->img_url);
-                if (Storage::disk('public')->exists($path)) {
-                    Storage::disk('public')->delete($path);
-                }
-                $path = $request->file('preview_item')->store('products', 'public');
-                $url = Storage::url($path);
-                $data_item->img_url = $url;
-            }
         }
 
-        $data_item->nama = $request->nama;
-        $data_item->harga_beli = $request->harga_beli;
-        $data_item->laba = $request->laba;
-        $data_item->kode = $kode;
-        $data_item->supplier = $request->supplier;
-        $data_item->jenis = $request->jenis;
+        $data_item->name = $request->category_name;
         $data_item->save();
 
-        return redirect('master-items');
+        return redirect('category-items');
     }
 
     public function delete($id)
     {
         Category::find($id)->delete();
-        return redirect('master-items');
+        return redirect('category-items');
     }
 
     public function updateRandomData()

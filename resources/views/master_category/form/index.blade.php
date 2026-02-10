@@ -16,7 +16,7 @@
                 @endif
 
                 <div class="card-body">
-                    @include('master_items.form.form')
+                    @include('master_category.form.form')
                 </div>
             </div>
         </div>

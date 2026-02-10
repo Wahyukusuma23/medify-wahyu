@@ -9,12 +9,11 @@
 
     <div class="form-group">
         <label>Nama</label>
-        <input type="text" class="form-control" name="nama" required  value="{{$item->nama ?? ''}}">
+        <input type="text" class="form-control" name="category_name" required  value="{{$item->name ?? ''}}">
     </div>
-    <div class="form-group">
-        <label for="">List Item</label>
-        
-    </div>
+    
+    @if($method == 'edit')
+    @endif
     <button class="btn btn-primary mt-3">Submit</button>
 
 </form>

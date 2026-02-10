@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Model\Category;
+use App\Models\Category;
 
 class MasterItem extends Model
 {
@@ -15,9 +15,9 @@ class MasterItem extends Model
     public function categories()
     {
         return $this->belongsToMany(
-            Category::class, 'product_categories',
-            'master_item_category',
+            Category::class,
+            'category_master_items',
             'master_items_id',
-            'category_id');
+            'category_id')->withTimestamps();;
     }
 }

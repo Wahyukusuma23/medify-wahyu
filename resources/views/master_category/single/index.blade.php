@@ -13,38 +13,27 @@
                 <div class="card-body">
                     <table>
                         <tr>
-                            <th>Nama</th>
-                            <td>:</td>
-                            <td>{{$data->nama}}</td>
-                        </tr>
-                        <tr>
-                            <th>Harga Beli</th>
+                            <th>Kode</th>
                             <td>:</td>
                             <td>{{$data->harga_beli}}</td>
                         </tr>
                         <tr>
-                            <th>Laba</th>
+                            <th>Nama</th>
                             <td>:</td>
-                            <td>{{$data->laba}}</td>
+                            <td>{{$data->name}}</td>
                         </tr>
                         <tr>
-                            <th>Harga Jual</th>
+                            <th>Nama</th>
                             <td>:</td>
-                            <td>{{$data->harga_beli + $data->harga_beli * $data->laba / 100 }}</td>
-                        </tr>
-                        <tr>
-                            <th>Supplier</th>
-                            <td>:</td>
-                            <td>{{$data->supplier}}</td>
-                        </tr>
-                        <tr>
-                            <th>Jenis</th>
-                            <td>:</td>
-                            <td>{{$data->jenis}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <img src=" {{asset($data->img_url)}}" alt="Gambar Produk" class="mb-4 mt-2" style="width:200px">
+                            <td>
+                                <ul>
+                                    @forelse ($data->categories as $item)
+                                        
+                                    <li>{{$item->nama}}</li>
+                                    @empty
+                                        <li>Tidak Ada data</li>
+                                    @endforelse
+                                </ul>
                             </td>
                         </tr>
                     </table>

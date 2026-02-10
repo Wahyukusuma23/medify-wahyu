@@ -47,6 +47,36 @@
             <optio @if($selected == 'ATK') selected @endif>ATK</option>
         </select>
     </div>
+    
+    <div class="form-group">
+            <label for="">Kategori</label>
+            @foreach ($categories as $category)
+                <div class="form-check">
+                    <input
+                        type="checkbox"
+                        name="categories[]"
+                        value="{{ $category->id }}"
+                        class="form-check-input"
+                        id="cat_{{ $category->id }}"
+
+                        @isset($item)
+                            @checked(
+                                in_array(
+                                    $category->id,
+                                    old('categories', $item->categories->pluck('id')->toArray())
+                                )
+                            )
+                        @else
+                            @checked(in_array($category->id, old('categories', [])))
+                        @endisset
+                    >
+
+                    <label class="form-check-label" for="cat_{{ $category->id }}">
+                        {{ $category->name }}
+                    </label>
+                </div>
+            @endforeach
+    </div>
     <div class="form-group">
         <label for="product_image">Foto Item</label>
         <input type="file" name="preview_item" id="preview_item" class="form-control"
