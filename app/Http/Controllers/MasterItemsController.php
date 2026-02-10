@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\MasterItem;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Exports\ItemsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class MasterItemsController extends Controller
@@ -128,5 +130,9 @@ class MasterItemsController extends Controller
         $array = ['Obat','Alkes','Matkes','Umum','ATK'];
         $random = rand(0,4);
         return $array[$random];
+    }
+    public function exportExcel()
+    {
+        return Excel::download(new ItemsExport, 'items.xlsx');
     }
 }

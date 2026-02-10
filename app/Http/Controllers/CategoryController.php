@@ -6,6 +6,7 @@ use App\Models\MasterItem;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CategoryController extends Controller
 {
@@ -105,5 +106,13 @@ class CategoryController extends Controller
         $array = ['Obat','Alkes','Matkes','Umum','ATK'];
         $random = rand(0,4);
         return $array[$random];
+    }
+    public function exportPdf($id)
+    {
+        $data = Category::with('items')->findOrFail($id);
+
+        $pdf = Pdf::loadView('master_category.print_pdf.index', compact('data'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream('products.pdf');
     }
 }

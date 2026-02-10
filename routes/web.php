@@ -28,7 +28,7 @@ Route::post('/master-items/form/{method}/{id?}', [App\Http\Controllers\MasterIte
 
 Route::get('/master-items/view/{kode}', [App\Http\Controllers\MasterItemsController::class, 'singleView']);
 Route::get('/master-items/delete/{id}', [App\Http\Controllers\MasterItemsController::class, 'delete']);
-
+Route::get('/export-items', [App\Http\Controllers\MasterItemsController::class, 'exportExcel'])->name('master-item.excel');
 
 Route::get('/master-items/update-random-data', [App\Http\Controllers\MasterItemsController::class, 'updateRandomData']);
 
@@ -40,3 +40,4 @@ Route::post('/category-items/form/{method}/{id?}', [App\Http\Controllers\Categor
 
 Route::get('/category-items/view/{kode}', [App\Http\Controllers\CategoryController::class, 'singleView']);
 Route::get('/category-items/delete/{id}', [App\Http\Controllers\CategoryController::class, 'delete']);
+Route::get('/category-items/export-pdf/{id}', [App\Http\Controllers\CategoryController::class, 'exportPdf'])->name('category-item.print');
